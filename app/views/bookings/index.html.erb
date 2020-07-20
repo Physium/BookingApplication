@@ -30,4 +30,14 @@
 
 <br>
 
+<%= month_calendar(events: @bookings)  do |date, bookings| %>
+  <%= date %>
+
+  <% bookings.each do |booking| %>
+    <div>
+      <%= booking.room.name %>
+    </div>
+  <% end %>
+<% end %>
+
 <%= link_to 'New Booking', new_booking_path %>

@@ -23,12 +23,12 @@
 
   <div class="field">
     <%= form.label :room_id %>
-    <%= form.text_field :room_id %>
+    <%= form.select :room_id, options_for_select(Room.all.map{|u|[u.name, u.id]}) %>
   </div>
 
   <div class="field">
     <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
+    <%= form.select :user_id, options_for_select(User.all.map{|u|[u.username, u.id]}) %>
   </div>
 
   <div class="actions">
