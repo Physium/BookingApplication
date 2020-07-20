@@ -34,8 +34,8 @@
   <%= date %>
 
   <% bookings.each do |booking| %>
-    <div>
-      <%= booking.room.name %>
+    <div class="alert alert-success">
+      <%= link_to booking.room.name + ": " + booking.start_time.strftime("%I:%M %p") + "-" + booking.end_time.strftime("%I:%M %p") + " (" + booking.user.username + ")", booking %>
     </div>
   <% end %>
 <% end %>

@@ -2,6 +2,9 @@ class SessionsController < ApplicationController
   skip_before_action :authorized, only: [:new, :create]
   
   def new
+    unless session[:user_id].nil?
+      redirect_to '/'
+    end
   end
 
   def create
@@ -15,6 +18,11 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    session[:user_id] = nil
+
+    redirect_to '/'
+  end
   #use this as a login page
   def page_requires_login
 
