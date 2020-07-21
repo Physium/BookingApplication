@@ -25,7 +25,9 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
-
+    session_id = current_user.id
+    @booking.user_id = session_id
+    
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
@@ -69,6 +71,6 @@ class BookingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def booking_params
-      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id)
+      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :descrption)
     end
 end
