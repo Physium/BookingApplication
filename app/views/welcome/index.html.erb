@@ -1,12 +1,74 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<style>
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
 
-<% if logged_in? %>
-    <h1>You are Logged In, <%= current_user.username %></h1>
-<% else %>
-    <%= button_to "Login", '/login', method: :get%>
-    <%= button_to "Sign Up", '/users/new', method: :get%>
-<%end%>
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
 
+.jumbotron h1 {
+  font-weight: 300;
+}
 
+.jumbotron .container {
+  max-width: 40rem;
+}
 
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+
+</style>
+<% content_for :avoid_default_main do %>
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1>Welcome to Tanzu Booking!</h1>
+                <p class="lead text-muted">Head over and start making room reservations.</p>
+
+                <% if logged_in? %>
+                    <p class="lead text-muted">Hi <%= current_user.first_name %>, what would you like to do today?</p>
+                    <p>
+                        <%= link_to "View Bookings", '/bookings', method: :get, class: "btn btn-primary my-2" %>
+                        <%= link_to "New Bookings", '/bookings/new', method: :get, class: "btn btn-secondary my-2" %>
+                    </p>
+
+                <% else %>
+                    <p>
+                        <%= link_to "Login", '/login', method: :get, class: "btn btn-primary my-2" %>
+                        <%= link_to "Sign Up", '/users/new', method: :get, class: "btn btn-secondary my-2" %>
+                    </p>
+                <%end%>
+            </div>
+        </section>
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <%= month_calendar(events: @bookings)  do |date, bookings| %>
+                    <%= date %>
+                
+                    <% bookings.each do |booking| %>
+                    <div class="alert alert-success">
+                        <%= link_to booking.room.name + ": " + booking.start_time.strftime("%I:%M %p") + "-" + booking.end_time.strftime("%I:%M %p") + " (" + booking.user.username + ")", booking %>
+                    </div>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </main>
+<% end %>
+  
