@@ -15,9 +15,10 @@ class ApplicationController < ActionController::Base
 
     def administrator?
         if current_user.username == 'administrator'
+            true
+        else
             false
         end
-        true
     end
 
     def authorized

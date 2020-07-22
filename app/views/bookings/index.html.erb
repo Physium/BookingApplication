@@ -15,7 +15,6 @@
           <th>Room</th>
           <th>User</th>
           <th>Title</th>
-          <th>Description</th>
           <th class="text-center" colspan="3">Actions</th>
         </tr>
       </thead>
@@ -29,7 +28,6 @@
             <td><%= booking.room.name %></td>
             <td><%= booking.user.username %></td>
             <td><%= booking.title %></td>
-            <td><%= booking.description %></td>
             <td><%= link_to 'Show', booking , class: "btn btn-success" %></td>
             <td><%= link_to 'Edit', edit_booking_path(booking), class:"btn btn-warning" %></td>
             <td><%= link_to 'Destroy', booking, method: :delete, data: { confirm: 'Are you sure?' } , class:"btn btn-danger" %></td>
