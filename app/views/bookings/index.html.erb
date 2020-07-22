@@ -1,43 +1,53 @@
-<p id="notice"><%= notice %></p>
+<% content_for :avoid_default_main do %>
+  <div class="container">
+    <p id="notice"><%= notice %></p>
 
-<h1>Bookings</h1>
+    <h1>Current Bookings</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Start time</th>
-      <th>End time</th>
-      <th>Room</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <%= link_to 'New Booking', new_booking_path, class: "btn btn-primary mb-4 mt-2"%>
 
-  <tbody>
-    <% @bookings.each do |booking| %>
-      <tr>
-        <td><%= booking.start_time %></td>
-        <td><%= booking.end_time %></td>
-        <td><%= booking.room_id %></td>
-        <td><%= booking.user_id %></td>
-        <td><%= link_to 'Show', booking %></td>
-        <td><%= link_to 'Edit', edit_booking_path(booking) %></td>
-        <td><%= link_to 'Destroy', booking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Booking Date</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th>Room</th>
+          <th>User</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th class="text-center" colspan="3">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bookings.each do |booking| %>
+          <tr>
+            <td><%= booking.start_time.strftime('%F(%A)') %></td>
+            <td><%= booking.start_time.strftime("%I:%M %p") %></td>
+            <td><%= booking.end_time.strftime("%I:%M %p") %></td>
+            <td><%= booking.room.name %></td>
+            <td><%= booking.user.username %></td>
+            <td><%= booking.title %></td>
+            <td><%= booking.description %></td>
+            <td><%= link_to 'Show', booking , class: "btn btn-success" %></td>
+            <td><%= link_to 'Edit', edit_booking_path(booking), class:"btn btn-warning" %></td>
+            <td><%= link_to 'Destroy', booking, method: :delete, data: { confirm: 'Are you sure?' } , class:"btn btn-danger" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    
+    <br>
+    <hr class="mb-4">
+    <%= month_calendar(events: @bookings)  do |date, bookings| %>
+      <%= date %>
+
+      <% bookings.each do |booking| %>
+        <div class="alert alert-success">
+          <%= link_to booking.room.name + ": " + booking.start_time.strftime("%I:%M %p") + "-" + booking.end_time.strftime("%I:%M %p") + " (" + booking.user.username + ")", booking %>
+        </div>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= month_calendar(events: @bookings)  do |date, bookings| %>
-  <%= date %>
-
-  <% bookings.each do |booking| %>
-    <div class="alert alert-success">
-      <%= link_to booking.room.name + ": " + booking.start_time.strftime("%I:%M %p") + "-" + booking.end_time.strftime("%I:%M %p") + " (" + booking.user.username + ")", booking %>
-    </div>
-  <% end %>
+  </div>
 <% end %>
-
-<%= link_to 'New Booking', new_booking_path %>

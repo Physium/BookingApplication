@@ -1,24 +1,57 @@
-<p id="notice"><%= notice %></p>
+<% content_for :avoid_default_main do %>
+  <div class="container">
+    <div class="py-5 text-center">
+      <%= image_tag "tanzu-bug.svg", class: "d-block mx-auto mb-4", width: "72", height: "72" %>
+      <h2>Booking Information</h2>
+      <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+    </div>
+    <p id="notice"><%= notice %></p>
+    <form>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>Date:</label>
+            <input type="text" class="form-control" value="<%= @booking.start_time.strftime('%F(%A)') %>" readonly>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>Start Time:</label>
+            <input type="text" class="form-control" value="<%= @booking.start_time.strftime("%I:%M %p") %>" readonly>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label>End Time:</label>
+            <input type="text" class="form-control" value="<%= @booking.end_time.strftime("%I:%M %p") %> " readonly>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="exampleInputPassword1">Room Name:</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= @booking.room.name %>" readonly>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="exampleInputPassword1">Booked By:</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" value="<%= @booking.user.username %>" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Meeting Title:</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" value="<%= @booking.title %>" readonly>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Meeting Description:</label>
+        <textarea class="form-control" id="exampleInputPassword1" readonly> <%= @booking.description %> </textarea>
+      </div>
+    </form>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @booking.start_time %>
-</p>
-
-<p>
-  <strong>End time:</strong>
-  <%= @booking.end_time %>
-</p>
-
-<p>
-  <strong>Room:</strong>
-  <%= @booking.room.name %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @booking.user.username %>
-</p>
-
-<%= link_to 'Edit', edit_booking_path(@booking) %> |
-<%= link_to 'Back', bookings_path %>
+  <%= link_to 'Edit', edit_booking_path(@booking), class:"btn btn-warning" %>
+  <%= link_to 'Back', bookings_path, class:"btn btn-secondary"%>
+  </div>
+<% end %>

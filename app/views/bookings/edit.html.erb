@@ -1,6 +1,52 @@
-<h1>Editing Booking</h1>
-
-<%= render 'form', booking: @booking %>
+<% content_for :avoid_default_main do %>
+    <div class="container">
+        <div class="py-5 text-center">
+            <%= image_tag "tanzu-bug.svg", class: "d-block mx-auto mb-4", width: "72", height: "72" %>
+            <h2>Edit Booking</h2>
+            <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        </div>
+        
+        <%= bootstrap_form_with(model: @booking, local: true) do |form| %>
+            <% if @booking.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+          
+                <ul>
+                  <% booking.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+            
+            <h4 class="mb-3">Booking Information</h4>
+            <div class="row">
+              <div class="col">
+                <%= form.datetime_select :start_time %>
+              </div>
+              <div class="col">
+                <%= form.datetime_select :end_time %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <%= form.select :room_id, options_for_select(Room.all.map{|u|[u.name, u.id]}) %>
+              </div>
+              <div class="col">
+                <%= form.text_field :title %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <%= form.text_area :description %>
+              </div>
+            </div>
+            <hr class="mb-4">
+            <%= form.submit "Create Booking" , class:"btn btn-primary btn-lg btn-block" %>
+          <% end %>
+          
+    </div>
+<% end %>
 
 <%= link_to 'Show', @booking %> |
 <%= link_to 'Back', bookings_path %>
