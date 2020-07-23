@@ -13,11 +13,27 @@
   
   <h4 class="mb-3">Booking Information</h4>
   <div class="row">
-    <div class="col">
-      <%= form.datetime_select :start_time %>
+    <div class="col-sm-6">
+      <div class="form-group">
+          <%= label_tag 'booking_start_time', 'Start Time' %>
+          <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+              <%= form.text_field_without_bootstrap :start_time, value: form.object.start_time ? form.object.start_time.strftime('%B %d, %Y %I:%M %p') : nil, class:"form-control datetimepicker-input", data:{target:"#datetimepicker1"} %>
+              <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+          </div>
+      </div>
     </div>
-    <div class="col">
-      <%= form.datetime_select :end_time %>
+    <div class="col-sm-6">
+      <div class="form-group">
+          <%= label_tag 'booking_end_time', 'End Time' %>
+          <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+              <%= form.text_field_without_bootstrap :end_time, value: form.object.end_time ? form.object.end_time.strftime('%B %d, %Y %I:%M %p') : nil, class:"form-control datetimepicker-input", data:{target:"#datetimepicker2"} %>
+              <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                  <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+          </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -36,3 +52,30 @@
   <hr class="mb-4">
   <%= form.submit "Create Booking" , class:"btn btn-primary btn-lg btn-block" %>
 <% end %>
+<script type="text/javascript">
+  $(function () {
+      $('#datetimepicker1').datetimepicker({
+        format: 'MMMM D, YYYY h:mm A',
+        stepping: 15,
+        locale: 'en'
+      });
+
+      $('#datetimepicker2').datetimepicker({
+        format: 'MMMM D, YYYY h:mm A',
+        stepping: 15,
+        locale: 'en'
+      });
+  });
+  $.fn.datetimepicker.Constructor.Default = $.extend({},
+          $.fn.datetimepicker.Constructor.Default,
+          { icons:
+                  { time: 'fas fa-clock',
+                      date: 'fas fa-calendar',
+                      up: 'fas fa-arrow-up',
+                      down: 'fas fa-arrow-down',
+                      previous: 'fas fa-arrow-circle-left',
+                      next: 'fas fa-arrow-circle-right',
+                      today: 'far fa-calendar-check-o',
+                      clear: 'fas fa-trash',
+                      close: 'far fa-times' } });
+</script>

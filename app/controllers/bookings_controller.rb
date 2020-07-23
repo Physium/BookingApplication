@@ -25,6 +25,9 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
+
+    print params[:booking]
+
     session_id = current_user.id
     @booking.user_id = session_id
 
@@ -84,6 +87,6 @@ class BookingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def booking_params
-      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :description)
+      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :description, :asda)
     end
 end
