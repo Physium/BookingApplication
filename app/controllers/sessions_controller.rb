@@ -5,6 +5,7 @@ class SessionsController < ApplicationController
     unless session[:user_id].nil?
       redirect_to '/'
     end
+    @user = User.new
   end
 
   def create
@@ -14,7 +15,9 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to '/'
     else
-      redirect_to '/login'
+      #@user.errors = "hello"
+      flash[:notice] = "Invalid Username or Password."
+      render :new
     end
   end
 
