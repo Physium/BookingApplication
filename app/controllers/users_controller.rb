@@ -35,7 +35,7 @@ class UsersController < ApplicationController
           format.html { redirect_to '/users', notice: 'User was successfully created.' }
           format.json { render :show, status: :created, location: @user }
         else
-          format.html { redirect_to '/login', notice: 'User was successfully created. Proceed to login.' }
+          format.html { redirect_to '/login', success: 'User was successfully created. Proceed to login.' }
           format.json { render :show, status: :created, location: @user }
         end
       else
