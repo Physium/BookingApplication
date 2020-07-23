@@ -26,3 +26,8 @@
     padding: 3rem 1.5rem;
     text-align: center;
 }
+
+.simple-calendar .day {
+  height: 120px;
+  font-size: 0.8rem;
+}
