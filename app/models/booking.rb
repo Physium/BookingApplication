@@ -14,8 +14,8 @@ class Booking < ApplicationRecord
     end 
 
     if overlap_meetings > 0
-      errors.add(:start_time, "Selected time has other booking in place")
-      errors.add(:end_time, "Selected time has other booking in place")
+      errors.add(:start_time, "Selected time has other bookings in place")
+      errors.add(:end_time, "Selected time has other bookings in place")
     end
   end
 

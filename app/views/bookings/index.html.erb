@@ -2,7 +2,7 @@
   <div class="container">
     <p id="notice"><%= notice %></p>
 
-    <h1>Current Bookings</h1>
+    <h1>Upcoming Bookings</h1>
 
     <%= link_to 'New Booking', new_booking_path, class: "btn btn-primary mb-4 mt-2"%>
 
@@ -20,7 +20,7 @@
       </thead>
 
       <tbody>
-        <% @bookings.each do |booking| %>
+        <% @current_user_bookings.each do |booking| %>
           <tr>
             <td><%= booking.start_time.strftime('%F(%A)') %></td>
             <td><%= booking.start_time.strftime("%I:%M %p") %></td>
@@ -42,7 +42,11 @@
       <%= date %>
 
       <% bookings.each do |booking| %>
+        <% if current_user.id == booking.user_id %>
         <div class="alert alert-success">
+        <% else %>
+        <div class="alert alert-secondary">
+        <% end %>
           <%= link_to booking.room.name + ": " + booking.start_time.strftime("%I:%M %p") + "-" + booking.end_time.strftime("%I:%M %p") + " (" + booking.user.username + ")", booking %>
         </div>
       <% end %>

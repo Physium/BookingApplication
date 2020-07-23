@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
     before_action :authorized
+
     helper_method :administrator?
     helper_method :current_user
     helper_method :logged_in?
@@ -14,7 +15,7 @@ class ApplicationController < ActionController::Base
     end
 
     def administrator?
-        if current_user.username == 'administrator'
+        if logged_in? && current_user.username == 'administrator'
             true
         else
             false

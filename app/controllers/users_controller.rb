@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   skip_before_action :authorized, only: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :require_same_user, only: [:show, :edit, :update]
+  before_action :admin_rights, only: [:index, :destory]
 
   # GET /users
   # GET /users.json
@@ -76,5 +78,16 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:first_name, :last_name, :email, :username, :password)
+    end
+
+    def require_same_user
+      if current_user.id != @user.id && !administrator?
+        #lash[:alert] = "You can only edit or delete your own article"
+        redirect_to booking_path
+      end
+    end
+
+    def admin_rights
+      redirect_to '/' unless administrator?
     end
 end

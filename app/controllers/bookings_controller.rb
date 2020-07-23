@@ -1,10 +1,15 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :require_same_user, only: [:edit, :update, :destory]
 
   # GET /bookings
   # GET /bookings.json
   def index
     @bookings = Booking.all
+
+    session_id = current_user.id
+
+    @current_user_bookings = Booking.all.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now() )
   end
 
   # GET /bookings/1
@@ -87,6 +92,13 @@ class BookingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def booking_params
-      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :description, :asda)
+      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :description)
+    end
+
+    def require_same_user
+      if current_user.id != @booking.user_id && !administrator?
+        #lash[:alert] = "You can only edit or delete your own article"
+        redirect_to @booking
+      end
     end
 end

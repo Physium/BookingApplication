@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
+  before_action :admin_rights
 
   # GET /rooms
   # GET /rooms.json
@@ -73,4 +74,9 @@ class RoomsController < ApplicationController
     def room_params
       params.require(:room).permit(:name, :capacity)
     end
+
+    def admin_rights
+      redirect_to '/' unless administrator?
+    end
+
 end
