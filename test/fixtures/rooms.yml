@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+room1:
   name: Singapore Room
-  capacity: 1
+  capacity: 4
 
-two:
+room2:
   name: Okinawa Room
-  capacity: 1
+  capacity: 6
