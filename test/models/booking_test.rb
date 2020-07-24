@@ -4,8 +4,7 @@ class BookingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
-
-
+  
   test "booking should not save without title" do
     booking = Booking.new(start_time:"2020-07-20 19:00:00", end_time:"2020-07-20 20:00:00", room_id:1, user_id:1)
     assert_not booking.save, "Saved the booking without a title"
