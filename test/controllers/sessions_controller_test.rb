@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionDispatch::IntegrationTest
 
-  def setup do 
+  setup do 
     test_password = BCrypt::Password.create("VMware1!")
     @user = User.create(first_name:"Ah Kow", last_name:"Tan", email:"ahkow@vmware.com", username:"ahkow", password_digest: test_password)
 
