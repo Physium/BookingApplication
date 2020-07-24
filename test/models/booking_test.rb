@@ -4,10 +4,18 @@ class BookingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
-  
-  test "booking should not save without title" do
-    booking = Booking.new(start_time:"2020-07-20 19:00:00", end_time:"2020-07-20 20:00:00", room_id:1, user_id:1)
-    assert_not booking.save, "Saved the booking without a title"
+
+  def setup
+    @booking = Booking.new(start_time: "2020-07-22 19:00:00", end_time: '2020-07-22 20:00:00', room_id: bookings(:booking1).room_id, user_id: bookings(:booking1).user_id, title: "Meeting with Hello World", description: 'Hello World')
+  end
+
+  test "booking should be valid" do
+    assert @booking.valid?
+  end
+
+  test "booking title should be present" do
+    @booking.title = " "
+    assert_not @booking.valid?, "Saved the booking without a title"
   end
 
   test "booking should not overlap with other bookings" do

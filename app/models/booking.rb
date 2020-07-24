@@ -1,6 +1,8 @@
 class Booking < ApplicationRecord
   belongs_to :room
   belongs_to :user
+  validates :start_time, presence: true
+  validates :end_time, presence: true
   validates :title, presence: true
   validate :check_time_slot, :check_time, :check_date
 

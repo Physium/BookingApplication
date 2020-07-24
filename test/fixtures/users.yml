@@ -5,11 +5,11 @@ user1:
   last_name: Loh
   email: wloh@vmware.com
   username: wloh
-  password_digest: VMware1!
+  password_digest: <%= BCrypt::Password.create('VMware1!') %>
 
-user1:
+user2:
   first_name: Valerie
   last_name: Lee
   email: lvalerie@vmware.com
   username: administrator
-  password_digest: VMware1!
+  password_digest: <%= BCrypt::Password.create('VMware1!') %>
