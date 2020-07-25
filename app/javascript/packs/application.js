@@ -21,16 +21,19 @@ global.$ = jQuery;
 
 var userDataTable;
 var roomDataTable;
+var adminDataTable;
 
 //figure out what is this turbolink stuff. causing alot of issues.
 $(document).on('turbolinks:load', function(){
     userDataTable = $('#users-dtable').DataTable();
     roomDataTable = $('#room-dtable').DataTable();
+    adminDataTable = $('#admin-dtable').DataTable();
 });
 
 document.addEventListener("turbolinks:before-cache", function() {
     userDataTable.destroy();
     roomDataTable.destroy();
+    adminDataTable.destroy();
   });
 
 // Uncomment to copy all static images under ../images to the output folder and reference

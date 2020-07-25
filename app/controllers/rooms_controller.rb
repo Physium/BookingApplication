@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
   def index
     @rooms = Room.all
 
-    @new_room = Room.new
+    @room = Room.new
   end
 
   # GET /rooms/1
@@ -27,6 +27,7 @@ class RoomsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
+    @rooms = Room.all
     @room = Room.new(room_params)
     print @room.name
     respond_to do |format|
@@ -34,7 +35,7 @@ class RoomsController < ApplicationController
         format.html { redirect_to '/rooms', notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @room.errors, status: :unprocessable_entity }
       end
     end
