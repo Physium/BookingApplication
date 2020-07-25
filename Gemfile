@@ -26,6 +26,7 @@ gem 'simple_calendar', '~> 2.0'
 
 gem 'bootstrap_form', '~> 4.0'
 
+#gem 'jquery-datatables'
 #converted below 2 gems to yarn instead
 #gem 'font_awesome5_rails'
 #gem 'bootstrap4-datetime-picker-rails'

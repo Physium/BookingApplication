@@ -12,7 +12,26 @@ import "bootstrap"
 import "@fortawesome/fontawesome-free/js/all"
 require("moment/locale/ja")
 require("tempusdominus-bootstrap-4")
+require('datatables.net-bs4')
+import "datatables.net-bs4/css/dataTables.bootstrap4.css";
 
+//jquery stuff just to get datatables working.
+import $ from 'jquery';
+global.$ = jQuery;
+
+var userDataTable;
+var roomDataTable;
+
+//figure out what is this turbolink stuff. causing alot of issues.
+$(document).on('turbolinks:load', function(){
+    userDataTable = $('#users-dtable').DataTable();
+    roomDataTable = $('#room-dtable').DataTable();
+});
+
+document.addEventListener("turbolinks:before-cache", function() {
+    userDataTable.destroy();
+    roomDataTable.destroy();
+  });
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
