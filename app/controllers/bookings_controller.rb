@@ -8,8 +8,9 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
 
     session_id = current_user.id
-
-    @current_user_bookings = Booking.all.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now() )
+    @user_bookings = Booking.all.where('user_id = ?', session_id).order('start_time ASC')
+    @current_user_bookings = Booking.all.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC')
+    @top3_user_bookings = Booking.all.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC').limit(3)
   end
 
   # GET /bookings/1

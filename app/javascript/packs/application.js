@@ -19,21 +19,38 @@ import "datatables.net-bs4/css/dataTables.bootstrap4.css";
 import $ from 'jquery';
 global.$ = jQuery;
 
+var userBookingDataTable;
 var userDataTable;
 var roomDataTable;
 var adminDataTable;
 
 //figure out what is this turbolink stuff. causing alot of issues.
 $(document).on('turbolinks:load', function(){
+    userBookingDataTable = $('#user-booking-dtable').DataTable();
     userDataTable = $('#users-dtable').DataTable();
     roomDataTable = $('#room-dtable').DataTable();
     adminDataTable = $('#admin-dtable').DataTable();
+
+    $('#all-booking').click(function(){
+      $(this).hide()
+      $('#user-booking-list').show()
+      $('#upcoming-booking').show()
+      $('#top-booking').hide()
+    })
+
+    $('#upcoming-booking').click(function(){
+      $(this).hide()
+      $('#all-booking').show()
+      $('#top-booking').show()
+      $('#user-booking-list').hide()
+    })
 });
 
 document.addEventListener("turbolinks:before-cache", function() {
     userDataTable.destroy();
     roomDataTable.destroy();
     adminDataTable.destroy();
+    userBookingDataTable.destroy();
   });
 
 // Uncomment to copy all static images under ../images to the output folder and reference
