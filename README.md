@@ -5,7 +5,7 @@ This is a 1 week Ruby on Rails challenge for me to learn and better understand t
 The choice of application here is a room booking application which allows the users to sign up and make bookings to reserve rooms.
 
 A live preview of the application is host at Heroku:
-* [https://cryptic-hamlet-57533.herokuapp.com/] (https://cryptic-hamlet-57533.herokuapp.com/)
+* (https://cryptic-hamlet-57533.herokuapp.com/) [https://cryptic-hamlet-57533.herokuapp.com/]
 * Its a free instance, so please go easy on it.
 
 Application is done with the following core technology:
@@ -14,7 +14,7 @@ Application is done with the following core technology:
 * Postgresql
 
 ## To Deploy Locally
-* Ensure Rails 6 is installed locally by following (Offical Documentation)[https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project-installing-rails]
+* Ensure Rails 6 is installed locally by following [Offical Documentation](https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project-installing-rails)
 * Create database name with the respective name under ``config\database.yml``
 * Run the following commands:
 ``` sh
