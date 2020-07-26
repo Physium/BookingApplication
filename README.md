@@ -7,6 +7,9 @@ The choice of application here is a room booking application which allows the us
 A live preview of the application is host at Heroku:
 * (https://cryptic-hamlet-57533.herokuapp.com/) [https://cryptic-hamlet-57533.herokuapp.com/]
 * Its a free instance, so please go easy on it.
+* There are 2 categories of users, normal users and admin user.
+* Normal users can simply sign up via the application and start using the application.
+* Admin users are specifically assigned and have access to additional controls within the application. ( Adding of room, editing of users, full booking controls across all users )
 
 Application is done with the following core technology:
 * Rails 6
