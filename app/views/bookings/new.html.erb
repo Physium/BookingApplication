@@ -6,32 +6,7 @@
         <p class="lead">Please be ensure basic room booking etiquettes when booking rooms. Keep all meetings within a day.</p>
     </div>
     <%= render 'form', booking: @booking %>
-
-    <%= bootstrap_form_tag url:'/bookings/search' do |form| %>
-        <h4 class="mb-3">Booking Information</h4>
-        <div class="row">
-          <div class="col-sm-6">
-            <%= form.datetime_field :start_time %>
-          </div>
-          <div class="col-sm-6">
-            <%= form.datetime_field :end_time %>
-          </div>
-        </div>
-        <hr class="mb-4">
-        <%= form.submit "Search" , class:"btn btn-primary btn-lg btn-block" %>
-      <% end %>
-
 </div>
 <% end %>
 
 <%= link_to 'Back', bookings_path %>
-
-
-<script type="text/javascript">
-  $(function () {
-      $.post("/bookings/search", {"start_time": "2020-08-05T09:27", "end_time": "2020-08-05T23:27"}).done(function(data){
-            console.log(data)
-        })
-  })
-
-</script>
