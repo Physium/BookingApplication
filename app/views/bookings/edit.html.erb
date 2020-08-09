@@ -9,10 +9,10 @@
         <%= bootstrap_form_with(model: @booking, local: true) do |form| %>
             <% if @booking.errors.any? %>
               <div id="error_explanation">
-                <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+                <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
           
                 <ul>
-                  <% booking.errors.full_messages.each do |message| %>
+                  <% @booking.errors.full_messages.each do |message| %>
                     <li><%= message %></li>
                   <% end %>
                 </ul>
@@ -46,7 +46,7 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <%= form.select :room_id, options_for_select(Room.all.map{|u|[u.name, u.id]}) %>
+                <%= form.select :room_id, options_for_select(Room.all.map{|u|[u.name, u.id]}, selected:  @booking.room.id ) %>
               </div>
               <div class="col">
                 <%= form.text_field :title %>
