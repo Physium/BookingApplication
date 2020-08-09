@@ -27,6 +27,34 @@ class BookingsController < ApplicationController
   def edit
   end
 
+  # POST /booking/search/
+  # this returns available rooms during timeframe
+  def search
+  
+    start_time = params['start_time']
+    end_time = params['end_time']
+
+    #retrive overlap meetings within timeframe
+    retrieve_available_meetings = Booking.where('start_time >= ? AND end_time <= ?', start_time, end_time)
+    puts retrieve_available_meetings.length
+
+    #retrieve all list of rooms to compared
+    retrieve_rooms = Room.all
+    overlap_rooms = []
+    available_rooms = []
+
+    #check if room
+    for i in retrieve_available_meetings
+      overlap_rooms << i.room
+    end
+
+    puts overlap_rooms
+    #remove rooms room list
+    @available_rooms = retrieve_rooms - overlap_rooms
+    render json: @available_rooms.to_json
+
+  end
+
   # POST /bookings
   # POST /bookings.json
   def create

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  
+  post 'bookings/search', to: 'bookings#search'
   get 'admin', to: 'admin#index'
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
