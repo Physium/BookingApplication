@@ -43,7 +43,7 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
   test "should update room" do
     sign_in_as(@user)
     patch room_url(@room), params: { room: { capacity: @room.capacity, name: @room.name } }
-    assert_redirected_to room_url(@room)
+    assert_redirected_to rooms_url
   end
 
   test "should destroy room" do
