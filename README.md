@@ -17,26 +17,41 @@ Application is done with the following core technology:
 * Postgresql
 
 ## To Deploy Locally
-* Ensure Rails 6 is installed locally by following [Offical Documentation](https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project-installing-rails)
-* Create database name with the respective name under ``config\database.yml``
+* Projects uses ruby 2.7. The ``.ruby-version`` file is already in place so you many use ``rbenv`` to install Ruby 2.7.0 and you are good to go.
+* Ensure postgresql is installed. If mac, ``brew install postgresql`` will do the job. 
 * Run the following commands:
 ``` sh
+# Clone the Repository
 git clone https://github.com/Physium/BookingApplication.git
+cd BookingApplication
+
+# Ensure that postgresql services is running
+brew services start postgresql
+
+# Install project dedepencies
 bundle install
+yarn install
+rails db:create db:migrate
+
+# Run
 rails server
 ```
 ## Testing
-* Uses in-built rails 6 test engine to carry out a serious of test on model and controller. 
+* Uses in-built rails 6 test engine to carry out a series of tests on models and controllers. 
 * Wrote a couple of integration test to mimic user workflows in creating and editing a booking.
 * Test can be run via ``rails test``
 
+## TODOs
+* Switch frontend templating engine from erb to slim
+* Switch test engine to RSpec
+
 ## Feature Improvement
-* Booking workflow - Recommend users a room that is available within a particular timeslot
+* ~~Booking workflow - Recommend users a room that is available within a particular timeslot~~
 * Move to a more powerful calendar such as FullCalendar
 * Work on providing a customer user profile and information page 
 * Use a frontend framework like Angular/React
-* Move away from bootstrap to materialcss of sort
-* Introduce Devops capabilties (Conterizing, CICD deployment, Infra as a Code)
+* Move away from bootstrap to MaterialCSS of sort
+* Introduce Devops capabilities (Containerizing, CICD deployment, Infra as a Code)
 * Deploy on AWS
 
 
