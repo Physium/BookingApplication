@@ -7,10 +7,9 @@ class BookingsController < ApplicationController
   def index
     @bookings = Booking.all
 
-    session_id = current_user.id
-    @user_bookings = Booking.where('user_id = ?', session_id).order('start_time ASC')
-    @current_user_bookings = Booking.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC')
-    @top3_user_bookings = Booking.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC').limit(3)
+    @user_bookings = current_user.bookings.order('start_time ASC')
+    @current_user_bookings = @user_bookings.select { |booking| booking.start_time >= DateTime.now }
+    @top3_user_bookings = @current_user_bookings[0..2]
   end
 
   # GET /bookings/1
