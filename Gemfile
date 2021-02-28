@@ -27,6 +27,8 @@ gem 'simple_calendar', '~> 2.0'
 gem 'bootstrap_form', '~> 4.0'
 
 gem 'dotenv-rails'
+
+gem 'slim'
 #gem 'jquery-datatables'
 #converted below 2 gems to yarn instead
 #gem 'font_awesome5_rails'
@@ -41,6 +43,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails'
 end
 
 group :development do

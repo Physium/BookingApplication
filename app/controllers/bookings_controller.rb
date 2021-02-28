@@ -8,9 +8,9 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
 
     session_id = current_user.id
-    @user_bookings = Booking.all.where('user_id = ?', session_id).order('start_time ASC')
-    @current_user_bookings = Booking.all.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC')
-    @top3_user_bookings = Booking.all.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC').limit(3)
+    @user_bookings = Booking.where('user_id = ?', session_id).order('start_time ASC')
+    @current_user_bookings = Booking.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC')
+    @top3_user_bookings = Booking.where('user_id = ? AND start_time >= ? ', session_id, DateTime.now()).order('start_time ASC').limit(3)
   end
 
   # GET /bookings/1
@@ -39,7 +39,7 @@ class BookingsController < ApplicationController
     end_time = params['end_time']
 
     #retrive overlap meetings within timeframe
-    retrieve_available_meetings = Booking.all.where('start_time <= ? AND end_time >= ?', end_time, start_time)
+    retrieve_available_meetings = Booking.where('start_time <= ? AND end_time >= ?', end_time, start_time)
     puts retrieve_available_meetings.length
 
     #retrieve all list of rooms to compared

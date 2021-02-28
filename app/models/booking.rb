@@ -8,11 +8,10 @@ class Booking < ApplicationRecord
 
   # check for booking overlaps
   def check_time_slot
-    print id
     if id.nil?
-      overlap_meetings = Booking.all.where("room_id = ? AND start_time <= ? AND end_time >= ?", room_id, end_time, start_time).count
+      overlap_meetings = Booking.where("room_id = ? AND start_time <= ? AND end_time >= ?", room_id, end_time, start_time).count
     else
-      overlap_meetings = Booking.all.where("id != ? AND room_id = ? AND start_time <= ? AND end_time >= ?", id, room_id, end_time, start_time).count
+      overlap_meetings = Booking.where("id != ? AND room_id = ? AND start_time <= ? AND end_time >= ?", id, room_id, end_time, start_time).count
     end 
 
     if overlap_meetings > 0
