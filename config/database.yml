@@ -84,6 +84,3 @@ test:
 #
 production:
   <<: *default
-  database: govtech_app_production
-  username: govtech_app
-  password: <%= ENV['GOVTECH_APP_DATABASE_PASSWORD'] %>
