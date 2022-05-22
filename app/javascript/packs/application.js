@@ -11,7 +11,6 @@ require("channels")
 import "bootstrap"
 import "@fortawesome/fontawesome-free/js/all"
 require("moment/locale/ja")
-require("tempusdominus-bootstrap-4")
 require('datatables.net-bs4')
 import "datatables.net-bs4/css/dataTables.bootstrap4.css";
 
