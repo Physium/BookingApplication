@@ -1,6 +1,9 @@
 class Booking < ApplicationRecord
   belongs_to :room
   belongs_to :user
+
+  scope :room_bookings_between, ->(room_id, start_time, end_time) { where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time, start_time) }
+
   validates :start_time, presence: true
   validates :end_time, presence: true
   validates :title, presence: true
@@ -15,11 +18,9 @@ class Booking < ApplicationRecord
   end
 
   def overlap_meetings?
-    if persisted?
-      where('id != ? AND room_id = ? AND start_time <= ? AND end_time >= ?', id, room_id, end_time, start_time).present?
-    else
-      where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time, start_time).present?
-    end
+    return where.not(id: id).room_bookings_between(room_id, end_time, start_time).present? if persisted?
+
+    room_bookings_between(room_id, end_time, start_time).present?
   end
 
   def check_time
