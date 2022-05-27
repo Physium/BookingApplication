@@ -21,18 +21,11 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-
 gem 'simple_calendar', '~> 2.0'
-
 gem 'bootstrap_form', '~> 4.0'
-
 gem 'dotenv-rails'
-
 gem 'slim'
-# gem 'jquery-datatables'
-# converted below 2 gems to yarn instead
-# gem 'font_awesome5_rails'
-# gem 'bootstrap4-datetime-picker-rails'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
