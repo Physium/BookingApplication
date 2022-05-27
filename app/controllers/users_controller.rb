@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized, only: [:new, :create]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :require_same_user, only: [:show, :edit, :update]
-  before_action :admin_rights, only: [:index, :destory]
+  skip_before_action :authorized, only: %i[new create]
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :require_same_user, only: %i[show edit update]
+  before_action :admin_rights, only: %i[index destory]
 
   # GET /users
   # GET /users.json
@@ -12,8 +12,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -21,8 +20,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   # POST /users.json
@@ -70,24 +68,25 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :username, :password)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    def require_same_user
-      if current_user.id != @user.id && !administrator?
-        #lash[:alert] = "You can only edit or delete your own article"
-        redirect_to booking_path
-      end
-    end
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :username, :password)
+  end
 
-    def admin_rights
-      redirect_to '/' unless administrator?
+  def require_same_user
+    if current_user.id != @user.id && !administrator?
+      # lash[:alert] = "You can only edit or delete your own article"
+      redirect_to booking_path
     end
+  end
+
+  def admin_rights
+    redirect_to '/' unless administrator?
+  end
 end

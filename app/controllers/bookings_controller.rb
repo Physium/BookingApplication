@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
-  before_action :require_same_user, only: [:edit, :update, :destory]
+  before_action :set_booking, only: %i[show edit update destroy]
+  before_action :require_same_user, only: %i[edit update destory]
 
   # GET /bookings
   # GET /bookings.json
@@ -14,8 +14,7 @@ class BookingsController < ApplicationController
 
   # GET /bookings/1
   # GET /bookings/1.json
-  def show
-  end
+  def show; end
 
   # GET /bookings/new
   def new
@@ -23,8 +22,7 @@ class BookingsController < ApplicationController
   end
 
   # GET /bookings/1/edit
-  def edit
-  end
+  def edit; end
 
   def new_search
     render 'bookings/search'
@@ -33,25 +31,24 @@ class BookingsController < ApplicationController
   # POST /booking/search/
   # this returns available rooms in json
   def search
-  
     start_time = params['start_time']
     end_time = params['end_time']
 
-    #retrive rooms that have overlap meetings within timeframe
-    retrieve_available_meetings = Booking.where('start_time <= ? AND end_time >= ?', end_time, start_time).map(&:room).uniq
+    # retrive rooms that have overlap meetings within timeframe
+    retrieve_available_meetings = Booking.where('start_time <= ? AND end_time >= ?', end_time,
+                                                start_time).map(&:room).uniq
     puts retrieve_available_meetings.length
 
-    #retrieve all list of rooms to compared
+    # retrieve all list of rooms to compared
     retrieve_rooms = Room.all
     overlap_rooms = []
 
     puts overlap_rooms
 
-    #remove rooms room list
+    # remove rooms room list
     @available_rooms = retrieve_rooms - retrieve_available_meetings
 
     render json: @available_rooms.to_json
-    
   end
 
   # POST /bookings
@@ -64,15 +61,15 @@ class BookingsController < ApplicationController
     session_id = current_user.id
     @booking.user_id = session_id
 
-    #cur_starttime = DateTime.new(params[:booking]['start_time(1i)'].to_i,params[:booking]['start_time(2i)'].to_i,params[:booking]['start_time(3i)'].to_i,params[:booking]['start_time(4i)'].to_i,params[:booking]['start_time(5i)'].to_i)
-    #cur_endtime = DateTime.new(params[:booking]['end_time(1i)'].to_i,params[:booking]['end_time(2i)'].to_i,params[:booking]['end_time(3i)'].to_i,params[:booking]['end_time(4i)'].to_i,params[:booking]['endtime(5i)'].to_i)
-    
-    #overlaps = Booking.all.where("room_id = ? AND start_time <= ? AND end_time >= ?", params[:booking][:room_id], cur_endtime, cur_starttime).count
-    #print overlaps
+    # cur_starttime = DateTime.new(params[:booking]['start_time(1i)'].to_i,params[:booking]['start_time(2i)'].to_i,params[:booking]['start_time(3i)'].to_i,params[:booking]['start_time(4i)'].to_i,params[:booking]['start_time(5i)'].to_i)
+    # cur_endtime = DateTime.new(params[:booking]['end_time(1i)'].to_i,params[:booking]['end_time(2i)'].to_i,params[:booking]['end_time(3i)'].to_i,params[:booking]['end_time(4i)'].to_i,params[:booking]['endtime(5i)'].to_i)
 
-    #if overlaps > 0
+    # overlaps = Booking.all.where("room_id = ? AND start_time <= ? AND end_time >= ?", params[:booking][:room_id], cur_endtime, cur_starttime).count
+    # print overlaps
+
+    # if overlaps > 0
     #  @booking.errors.add(:start_time, "Selected time has other booking in place")
-    #end
+    # end
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
@@ -109,24 +106,25 @@ class BookingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_booking
-      @booking = Booking.find(params[:id])
-    end
 
-    def update_params
-      params.require(:booking).permit(:id, :start_time, :end_time, :room_id, :user_id, :title, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_booking
+    @booking = Booking.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def booking_params
-      params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :description)
-    end
+  def update_params
+    params.require(:booking).permit(:id, :start_time, :end_time, :room_id, :user_id, :title, :description)
+  end
 
-    def require_same_user
-      if current_user.id != @booking.user_id && !administrator?
-        #lash[:alert] = "You can only edit or delete your own article"
-        redirect_to @booking
-      end
+  # Only allow a list of trusted parameters through.
+  def booking_params
+    params.require(:booking).permit(:start_time, :end_time, :room_id, :user_id, :title, :description)
+  end
+
+  def require_same_user
+    if current_user.id != @booking.user_id && !administrator?
+      # lash[:alert] = "You can only edit or delete your own article"
+      redirect_to @booking
     end
+  end
 end

@@ -1,29 +1,28 @@
 class ApplicationController < ActionController::Base
+  before_action :authorized
 
-    before_action :authorized
+  helper_method :administrator?
+  helper_method :current_user
+  helper_method :logged_in?
+  add_flash_types :success, :warning, :danger, :info
 
-    helper_method :administrator?
-    helper_method :current_user
-    helper_method :logged_in?
-    add_flash_types :success, :warning, :danger, :info
-    
-    def current_user
-        User.find_by(id: session[:user_id])
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
+
+  def logged_in?
+    !current_user.nil?
+  end
+
+  def administrator?
+    if logged_in? && current_user.username == 'administrator'
+      true
+    else
+      false
     end
+  end
 
-    def logged_in?
-        !current_user.nil?
-    end
-
-    def administrator?
-        if logged_in? && current_user.username == 'administrator'
-            true
-        else
-            false
-        end
-    end
-
-    def authorized
-        redirect_to '/' unless logged_in?
-    end
+  def authorized
+    redirect_to '/' unless logged_in?
+  end
 end
