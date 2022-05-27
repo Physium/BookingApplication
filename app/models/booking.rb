@@ -8,17 +8,17 @@ class Booking < ApplicationRecord
 
   # check for booking overlaps
   def check_time_slot
-    overlap_meetings = if id.nil?
-                         Booking.where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time,
-                                       start_time).count
-                       else
-                         Booking.where('id != ? AND room_id = ? AND start_time <= ? AND end_time >= ?', id, room_id,
-                                       end_time, start_time).count
-                       end
+    return if !overlap_meetings?
 
-    if overlap_meetings > 0
-      errors.add(:start_time, 'Selected time has other bookings in place')
-      errors.add(:end_time, 'Selected time has other bookings in place')
+    errors.add(:start_time, 'Selected time has other bookings in place')
+    errors.add(:end_time, 'Selected time has other bookings in place')
+  end
+
+  def overlap_meetings?
+    if persisted?
+      where('id != ? AND room_id = ? AND start_time <= ? AND end_time >= ?', id, room_id, end_time, start_time).present?
+    else
+      where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time, start_time).present?
     end
   end
 
