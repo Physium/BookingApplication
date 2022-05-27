@@ -9,7 +9,6 @@ class Booking < ApplicationRecord
   validates :title, presence: true
   validate :check_time_slot, :check_time, :check_date
 
-  # check for booking overlaps
   def check_time_slot
     return if !overlap_meetings?
 

@@ -61,15 +61,6 @@ class BookingsController < ApplicationController
     session_id = current_user.id
     @booking.user_id = session_id
 
-    # cur_starttime = DateTime.new(params[:booking]['start_time(1i)'].to_i,params[:booking]['start_time(2i)'].to_i,params[:booking]['start_time(3i)'].to_i,params[:booking]['start_time(4i)'].to_i,params[:booking]['start_time(5i)'].to_i)
-    # cur_endtime = DateTime.new(params[:booking]['end_time(1i)'].to_i,params[:booking]['end_time(2i)'].to_i,params[:booking]['end_time(3i)'].to_i,params[:booking]['end_time(4i)'].to_i,params[:booking]['endtime(5i)'].to_i)
-
-    # overlaps = Booking.all.where("room_id = ? AND start_time <= ? AND end_time >= ?", params[:booking][:room_id], cur_endtime, cur_starttime).count
-    # print overlaps
-
-    # if overlaps > 0
-    #  @booking.errors.add(:start_time, "Selected time has other booking in place")
-    # end
     respond_to do |format|
       if @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
