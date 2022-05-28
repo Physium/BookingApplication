@@ -2,7 +2,9 @@ class Booking < ApplicationRecord
   belongs_to :room
   belongs_to :user
 
-  scope :room_bookings_between, ->(room_id, start_time, end_time) { where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time, start_time) }
+  scope :room_bookings_between, ->(room_id, start_time, end_time) do
+    where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time, start_time)
+  end
 
   validates :start_time, presence: true
   validates :end_time, presence: true
@@ -10,26 +12,28 @@ class Booking < ApplicationRecord
   validate :check_time_slot, :check_time, :check_date
 
   def check_time_slot
-    return if !overlap_meetings?
+    return if no_overlap_bookings?
 
     errors.add(:start_time, 'Selected time has other bookings in place')
     errors.add(:end_time, 'Selected time has other bookings in place')
   end
 
-  def overlap_meetings?
-    return where.not(id: id).room_bookings_between(room_id, end_time, start_time).present? if persisted?
+  def no_overlap_bookings?
+    return where.not(id: id).room_bookings_between(room_id, start_time, end_time).blank? if persisted?
 
-    room_bookings_between(room_id, end_time, start_time).present?
+    Booking.room_bookings_between(room_id, start_time, end_time).blank?
   end
 
   def check_time
-    errors.add(:start_time, 'Start time is greater than or equal to end time') if start_time >= end_time
+    return if start_time <= end_time
+
+    errors.add(:start_time, 'Start time is greater than or equal to end time')
   end
 
   def check_date
-    if start_time.to_date != end_time.to_date
-      errors.add(:start_time, 'Keep bookings to a day only!')
-      errors.add(:end_time, 'Keep bookings to a day only!')
-    end
+    return if start_time.to_date == end_time.to_date
+
+    errors.add(:start_time, 'Keep bookings to a day only!')
+    errors.add(:end_time, 'Keep bookings to a day only!')
   end
 end
