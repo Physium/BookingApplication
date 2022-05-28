@@ -3,7 +3,7 @@ class Room < ApplicationRecord
   has_many :users, through: :bookings
 
   validates :name, presence: true,
-                   length: { minimum: 3, maximum: 25 },
+                   length: { minimum: 3, maximum: 100 },
                    uniqueness: { case_sensitive: false }
 
   validates :capacity, presence: true,
