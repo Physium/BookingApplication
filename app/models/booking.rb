@@ -2,8 +2,11 @@ class Booking < ApplicationRecord
   belongs_to :room
   belongs_to :user
 
+  scope :bookings_between, -> (start_time, end_time) do
+    where('start_time <= ? AND end_time >= ?', end_time, start_time)
+  end
   scope :room_bookings_between, ->(room_id, start_time, end_time) do
-    where('room_id = ? AND start_time <= ? AND end_time >= ?', room_id, end_time, start_time)
+    where(room: room_id).bookings_between(start_time, end_time)
   end
 
   validates :start_time, presence: true

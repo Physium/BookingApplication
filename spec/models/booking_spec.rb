@@ -12,16 +12,41 @@ RSpec.describe Booking, type: :model do
   end
 
   describe 'scope' do
+    describe '.bookings_between' do
+      let(:user) { create(:user) }
+      let(:room) { create(:room) }
+      let(:booking) { create(:booking, user: user, room: room) }
+      let(:booking2) { create(:booking) }
+      let(:start_time) { booking.start_time + 10.minutes }
+      let(:end_time) { start_time + 1.hour }
+
+      subject { described_class.bookings_between(start_time, end_time) }
+
+      it { expect(subject).to contain_exactly(booking, booking2) }
+
+      context 'when bookings are not within range' do
+        let(:start_time) { end_time - 1.hour }
+        let(:end_time) { Date.today.end_of_day - 1.hour }
+
+        it { expect(subject).to be_empty }
+      end
+    end
+
     describe '.room_bookings_between' do
       let(:user) { create(:user) }
       let(:room) { create(:room) }
       let(:booking) { create(:booking, user: user, room: room) }
+      let(:booking2) { create(:booking, room: room, start_time: booking2_start_time, end_time: booking2_end_time) }
+      let(:booking2_start_time) { booking.end_time + 10.minutes }
+      let(:booking2_end_time) { booking2_start_time + 1.hour }
       let(:start_time) { booking.start_time + 10.minutes }
-      let(:end_time) { start_time + 1.hour }
+      let(:end_time) { start_time + 2.hour }
 
       subject { described_class.room_bookings_between(room, start_time, end_time) }
 
-      it { expect(subject.last).to eq(booking) }
+      it do
+        expect(subject).to contain_exactly(booking, booking2)
+      end
 
       context 'when bookings are not within range' do
         let(:start_time) { end_time - 1.hour }
