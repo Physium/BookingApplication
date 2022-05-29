@@ -23,9 +23,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap_form', '~> 4.0'
 gem 'dotenv-rails'
+gem 'lograge'
 gem 'simple_calendar', '~> 2.0'
 gem 'slim'
-gem 'lograge'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
