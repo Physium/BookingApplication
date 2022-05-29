@@ -25,6 +25,7 @@ gem 'bootstrap_form', '~> 4.0'
 gem 'dotenv-rails'
 gem 'simple_calendar', '~> 2.0'
 gem 'slim'
+gem 'lograge'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
