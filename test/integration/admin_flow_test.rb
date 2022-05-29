@@ -43,9 +43,6 @@ class AdminFlowTest < ActionDispatch::IntegrationTest
 
     get users_url
     assert_response :success
-
-    test_password = BCrypt::Password.create('VMware1!')
-
     assert_difference('User.count') do
       post users_url,
            params: { user: { email: 'test@email.com', first_name: 'Test', last_name: 'Testing', password: 'VMware1!',

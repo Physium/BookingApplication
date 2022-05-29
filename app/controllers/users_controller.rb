@@ -29,12 +29,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        if logged_in? and administrator?
+        if logged_in? && administrator?
           format.html { redirect_to '/users', notice: 'User was successfully created.' }
-          format.json { render :show, status: :created, location: @user }
         else
           format.html { redirect_to '/login', success: 'User was successfully created. Proceed to login.' }
-          format.json { render :show, status: :created, location: @user }
         end
       else
         format.html { render :new }
@@ -80,10 +78,9 @@ class UsersController < ApplicationController
   end
 
   def require_same_user
-    if current_user.id != @user.id && !administrator?
-      # lash[:alert] = "You can only edit or delete your own article"
-      redirect_to booking_path
-    end
+    return if current_user.id == @user.id || administrator?
+
+    redirect_to booking_path
   end
 
   def admin_rights

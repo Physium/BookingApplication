@@ -29,7 +29,6 @@ RSpec.describe BookingsController, type: :controller do
     end
   end
 
-  describe "#create" do
-
+  describe '#create' do
   end
 end

@@ -35,7 +35,7 @@ class BookingsController < ApplicationController
     end_time = params['end_time']
 
     retrieve_available_rooms = Booking.bookings_between(start_time, end_time).map(&:room).uniq
-    available_rooms =  Room.all - retrieve_available_rooms
+    available_rooms = Room.all - retrieve_available_rooms
 
     render json: available_rooms.to_json, status: :ok
   end
@@ -102,9 +102,8 @@ class BookingsController < ApplicationController
   end
 
   def require_same_user
-    if current_user.id != @booking.user_id && !administrator?
-      # lash[:alert] = "You can only edit or delete your own article"
-      redirect_to @booking
-    end
+    return if current_user.id == @booking.user_id || administrator?
+
+    redirect_to @booking
   end
 end
