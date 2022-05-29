@@ -34,21 +34,10 @@ class BookingsController < ApplicationController
     start_time = params['start_time']
     end_time = params['end_time']
 
-    # retrive rooms that have overlap meetings within timeframe
-    retrieve_available_meetings = Booking.where('start_time <= ? AND end_time >= ?', end_time,
-                                                start_time).map(&:room).uniq
-    puts retrieve_available_meetings.length
+    retrieve_available_rooms = Booking.bookings_between(start_time, end_time).map(&:room).uniq
+    available_rooms =  Room.all - retrieve_available_rooms
 
-    # retrieve all list of rooms to compared
-    retrieve_rooms = Room.all
-    overlap_rooms = []
-
-    puts overlap_rooms
-
-    # remove rooms room list
-    @available_rooms = retrieve_rooms - retrieve_available_meetings
-
-    render json: @available_rooms.to_json
+    render json: available_rooms.to_json, status: :ok
   end
 
   # POST /bookings
